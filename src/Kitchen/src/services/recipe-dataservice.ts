@@ -1,14 +1,20 @@
 import {HttpClient} from 'aurelia-http-client';
-import {inject} from 'aurelia-framework';
+import {autoinject} from 'aurelia-framework';
 
-@inject(HttpClient)
+import {Recipe} from '../models/recipe'
+
+
+@autoinject()
 export class RecipeService {
 
     constructor(private http: HttpClient) { }
 
-    getRecipes(): Promise<Recipe[]> {
-        return this.http.get('recipe/get')
-            .then(response => <Recipe[]>response.content);
+    get(id?: number): Promise<any> {
+        let queryString: string = id ? '?id=' + id : '';
+        return this.http.get('recipe/get' + queryString)
+            .then(response => response.content);
     }
+
+
 
 }

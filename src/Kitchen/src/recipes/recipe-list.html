@@ -1,8 +1,9 @@
-<template>
+﻿<template>
     <ul>
-        <li repeat.for="recipe of recipes" >
+        <li repeat.for="recipe of recipes">
             <p><strong>${recipe.name}</strong></p>
             <p>${recipe.description}</p>
+            <button click.delegate="edit(recipe.id)">edit</button>
         </li>
     </ul>
 </template>
