@@ -10,6 +10,7 @@ namespace skeleton_navigation_typescript_vs.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Title"] = "Kitchen";
             return View();
         }
 
