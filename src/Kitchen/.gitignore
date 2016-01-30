@@ -231,3 +231,7 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# js, map in ts source folders
+src/*.js
+src/*.map
