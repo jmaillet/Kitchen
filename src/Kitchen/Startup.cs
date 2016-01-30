@@ -9,6 +9,7 @@ using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace skeleton_navigation_typescript_vs
 {
@@ -43,9 +44,14 @@ namespace skeleton_navigation_typescript_vs
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
 
             // Add application services.
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +78,7 @@ namespace skeleton_navigation_typescript_vs
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
+           
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
