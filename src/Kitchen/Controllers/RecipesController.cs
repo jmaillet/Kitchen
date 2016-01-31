@@ -10,17 +10,27 @@ using Newtonsoft.Json;
 
 namespace Kitchen.Controllers
 {
-    public class RecipeController : Controller
+    [Route("api/[controller]")]
+    public class RecipesController : Controller
     {
-        // GET: /<controller>/
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var Recipes = new List<Recipe>() {
+        static List<Recipe> _Recipes = new List<Recipe>() {
                 new Recipe {Id =1, Name="Chicken Curry", Description= "slow cooked chicken in Indian curry sauce" },
                 new Recipe {Id=2, Name="Spaghetti w/ Meatballs", Description="Traditional Spaghetti with Meatballs" }
             };
-            return Json(Recipes);
+
+        // GET: /<controller>/
+        [HttpGet]
+        public IEnumerable<Recipe> GetAll()
+        {
+            return _Recipes;
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) {
+            var recipe = _Recipes.SingleOrDefault(r => r.Id == id);
+            if (recipe == null) return HttpNotFound();
+            return new ObjectResult(recipe);
+            
         }
     }
 }
