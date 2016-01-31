@@ -1,6 +1,6 @@
 
 import {Router, RouterConfiguration} from 'aurelia-router'
-import {Logger} from './common/logger';
+import {Logger} from '../common/logger';
 
 export class RecipesSection {
     
@@ -14,8 +14,8 @@ export class RecipesSection {
         this.logger.debug("configuring Router ...");
         config.title = 'Kitchen';
         config.map([
-            { route: ['', 'recipes'],  moduleId: 'recipe-list'},
-            { route: 'recipes/:id', moduleId: 'recipe' }
+            { route: '',  moduleId: './recipe-list'},
+            { route: ':id', moduleId: './recipe' }
 
         ]);
 
