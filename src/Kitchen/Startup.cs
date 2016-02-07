@@ -10,8 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using Kitchen.Models;
 
-namespace skeleton_navigation_typescript_vs
+namespace Kitchen
 {
     public class Startup
     {
@@ -48,6 +49,12 @@ namespace skeleton_navigation_typescript_vs
                 .AddJsonOptions(options => {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
+
+            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=Kitchen;Trusted_Connection=True";
+
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<KitchenContext>(options => options.UseSqlServer(connectionString));
 
             // Add application services.
 
