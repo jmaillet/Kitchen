@@ -1,26 +1,29 @@
-import {HttpClient} from 'aurelia-http-client';
+import {HttpClient} from 'aurelia-fetch-client';
 import {autoinject} from 'aurelia-framework';
 
-import {Recipe} from '../models/recipe'
-import {Logger} from '../common/logger'
+import {Recipe} from '../models/recipe';
+
 
 
 @autoinject()
 export class RecipeService {
 
-    private logger: Logger;
+    constructor(private http: HttpClient) { }
 
-    constructor(private http: HttpClient) {
-        this.logger = new Logger('RecipeService');
+    get(id: number): Promise<Recipe> {
+        return this.fetch<Recipe>(`api/recipes/${id}`);
     }
 
-    get(id?: number): Promise<any> {
-        let detail: string = id ? id.toString() : '';
-        this.logger.debug(detail);
-        return this.http.get('api/recipes/' + detail)
-            .then(response => response.content);
+    all(): Promise<Recipe[]> {
+        return this.fetch<Recipe[]>('api/recipes');
+    }
+
+    private fetch<T>(url: string): Promise<T> {
+        return this.http.fetch(url)
+            .then(response => response.json())
+            .then(json => json as T);
     }
 
 
 
-}
+}   

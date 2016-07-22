@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace skeleton_navigation_typescript_vs.Controllers
+namespace Kitchen.Controllers
 {
     public class HomeController : Controller
     {
@@ -13,7 +9,5 @@ namespace skeleton_navigation_typescript_vs.Controllers
             ViewData["Title"] = "Kitchen";
             return View();
         }
-
-      
     }
 }

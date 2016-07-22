@@ -1,26 +1,31 @@
-﻿import {autoinject} from 'aurelia-framework'
-import {Router} from 'aurelia-router'
+﻿import {autoinject, LogManager} from 'aurelia-framework'
+
 import {RecipeService} from '../services/recipe-dataservice'
-import {Logger} from '../common/logger'
+
 import {Recipe} from '../models/recipe'
 
 @autoinject()
 export class RecipeListViewModel {
 
-    logger: Logger;
+    logger: LogManager
     recipes: Recipe[];
+    selectedId: number;
 
-    constructor(private router:Router, private recipeService: RecipeService) {
+    constructor(private recipeService: RecipeService) {
+        this.recipes = [];
         this.logger = new Logger('RecipeListViewModel');
     }
 
-    activate(): Promise<any> {
-        return this.recipeService.get()
-           .then (result => { this.recipes = result; })
-           .catch(reason => { this.logger.error(reason, true); });
+
+    created(): Promise<any> {
+        return this.recipeService.all()
+            .then(result => { this.recipes = result; })
+            .catch(reason => { this.logger.error(reason, true); });
     }
 
-    edit(id: number) {
-        this.router.navigate('recipes/' + id); 
+    select(recipe: Recipe) {
+        this.selectedId = recipe.id;
+        return true;
     }
+
 }

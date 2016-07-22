@@ -1,9 +1,17 @@
-﻿namespace Kitchen.Models {
-    public class InstructionStep {
-        public int Id { get; set; }
-        public string Detail { get; set; }
-        public int RecipeId { get; set; }
-        public Recipe Recipe { get; set; }
-     
+﻿namespace Kitchen.Models
+{
+    public class InstructionStep
+    {
+        public InstructionStep(int stepNumber, string detail, Recipe recipe)
+        {
+            StepNumber = stepNumber;
+            Detail = detail;
+            Recipe = recipe;
+        }
+
+        public int StepNumber { get; private set; }
+        public string Detail { get; private set; }
+
+        public Recipe Recipe { get; private set; }
     }
 }
