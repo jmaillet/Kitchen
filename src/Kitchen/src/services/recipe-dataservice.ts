@@ -11,11 +11,11 @@ export class RecipeService {
     constructor(private http: HttpClient) { }
 
     get(id: number): Promise<Recipe> {
-        return this.fetch<Recipe>(`api/recipes/${id}`);
+        return this.fetch(`api/recipes/${id}`);
     }
 
     all(): Promise<Recipe[]> {
-        return this.fetch<Recipe[]>('api/recipes');
+        return this.fetch('api/recipes');
     }
 
     private fetch<T>(url: string): Promise<T> {
