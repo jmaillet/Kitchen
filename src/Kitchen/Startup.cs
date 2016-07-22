@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using Kitchen.Models;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
-namespace skeleton_navigation_typescript_vs
+namespace Kitchen
 {
     public class Startup
     {
@@ -20,7 +23,8 @@ namespace skeleton_navigation_typescript_vs
             // Set up configuration sources.
 
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional:true, reloadOnChange:true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsDevelopment())
@@ -29,7 +33,7 @@ namespace skeleton_navigation_typescript_vs
                 builder.AddUserSecrets();
 
                 // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
-                builder.AddApplicationInsightsSettings(developerMode: true);
+           
             }
 
             builder.AddEnvironmentVariables();
@@ -41,17 +45,20 @@ namespace skeleton_navigation_typescript_vs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
+           
             
             services.AddMvc()
                 .AddJsonOptions(options => {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
 
+            const string connectionString = @"Server=(localdb)\mssqllocaldb;Database=Kitchen;Trusted_Connection=True";
+
+            services.AddDbContext<KitchenContext>(options => options.UseSqlServer(connectionString));
+
             // Add application services.
 
-           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +67,7 @@ namespace skeleton_navigation_typescript_vs
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseApplicationInsightsRequestTelemetry();
+       
 
             if (env.IsDevelopment())
             {
@@ -73,9 +80,9 @@ namespace skeleton_navigation_typescript_vs
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
+         
 
-            app.UseApplicationInsightsExceptionTelemetry();
+        
 
             app.UseStaticFiles();
            
@@ -91,6 +98,15 @@ namespace skeleton_navigation_typescript_vs
         }
 
         // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
+        public static void Main(string[] args)
+        {
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .Build();
+            host.Run();
+        }
     }
 }

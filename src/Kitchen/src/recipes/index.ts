@@ -1,24 +1,41 @@
 
 import {Router, RouterConfiguration} from 'aurelia-router'
-import {Logger} from './common/logger';
+import {autoinject} from 'aurelia-framework'
 
+import {RecipeService} from '../services/recipe-dataservice'
+import {Recipe} from '../models/recipe'
+
+@autoinject
 export class RecipesSection {
-    
-    logger: Logger;
+   
     router: Router;
-    constructor() {
-        this.logger = new Logger('App');
-    }
+    recipes: Recipe[];
+    selectedId: number;
 
+    constructor(private recipeService: RecipeService) {
+     
+        this.recipes = [];
+    }
+ 
     configureRouter(config: RouterConfiguration, router: Router) {
-        this.logger.debug("configuring Router ...");
         config.title = 'Kitchen';
         config.map([
-            { route: ['', 'recipes'],  moduleId: 'recipe-list'},
-            { route: 'recipes/:id', moduleId: 'recipe' }
+            { route: '', moduleId: './no-selection', title: 'Select' },
+            { route: ':id', moduleId: './recipe',  }
 
         ]);
 
         this.router = router;
     }
+    created(): Promise<any> {
+        return this.recipeService.all()
+            .then(result => { this.recipes = result; });
+           
+    }
+
+    select(recipe: Recipe) {
+        this.selectedId = recipe.id;
+        return true;
+    }
+
 }

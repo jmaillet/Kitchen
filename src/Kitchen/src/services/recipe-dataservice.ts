@@ -1,7 +1,8 @@
-import {HttpClient} from 'aurelia-http-client';
+import {HttpClient} from 'aurelia-fetch-client';
 import {autoinject} from 'aurelia-framework';
 
-import {Recipe} from '../models/recipe'
+import {Recipe} from '../models/recipe';
+
 
 
 @autoinject()
@@ -9,12 +10,20 @@ export class RecipeService {
 
     constructor(private http: HttpClient) { }
 
-    get(id?: number): Promise<any> {
-        let queryString: string = id ? '?id=' + id : '';
-        return this.http.get('recipe/get' + queryString)
-            .then(response => response.content);
+    get(id: number): Promise<Recipe> {
+        return this.fetch<Recipe>(`api/recipes/${id}`);
+    }
+
+    all(): Promise<Recipe[]> {
+        return this.fetch<Recipe[]>('api/recipes');
+    }
+
+    private fetch<T>(url: string): Promise<T> {
+        return this.http.fetch(url)
+            .then(response => response.json())
+            .then(json => json as T);
     }
 
 
 
-}
+}   

@@ -11,8 +11,8 @@ export class RecipeViewModel {
         this.logger = new Logger('RecipeViewModel');
     }
 
-    activate(id: number) {
-        return this.recipeService.get(id)
+    activate(info:any) {
+        return this.recipeService.get(info.id)
             .then(result => this.recipe = result)
             .catch(error => this.logger.error(error, true));
     }
