@@ -1,10 +1,11 @@
 System.config({
-  baseURL: "/",
+  baseURL: "/dist",
   defaultJSExtensions: true,
   transpiler: false,
   paths: {
-    "npm:*": "lib/npm/*",
-    "github:*": "lib/github/*"
+    
+    "npm:*": "../lib/npm/*",
+    "github:*": "../lib/github/*"
   },
 
   map: {

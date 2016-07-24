@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
@@ -11,8 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using Kitchen.Models;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 
 namespace Kitchen
 {
@@ -32,7 +27,7 @@ namespace Kitchen
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets();
 
-                // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
+               
            
             }
 
@@ -52,9 +47,9 @@ namespace Kitchen
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
 
-            const string connectionString = @"Server=(localdb)\mssqllocaldb;Database=Kitchen;Trusted_Connection=True";
+            // const string connectionString = @"Server=(localdb)\mssqllocaldb;Database=Kitchen;Trusted_Connection=True";
 
-            services.AddDbContext<KitchenContext>(options => options.UseSqlServer(connectionString));
+            // services.AddDbContext<KitchenContext>(options => options.UseSqlServer(connectionString));
 
             // Add application services.
 
@@ -79,11 +74,6 @@ namespace Kitchen
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
-         
-
-        
-
             app.UseStaticFiles();
            
 
