@@ -9,6 +9,7 @@
     "moduleResolution": "classic",
     "declaration": false,
     "noImplicitAny": false,
+    "noEmitOnError": false,
     "noResolve": true,
     "removeComments": true,
     "noLib": false,
