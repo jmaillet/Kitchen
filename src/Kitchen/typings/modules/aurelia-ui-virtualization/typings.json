@@ -1,0 +1,11 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/aurelia/ui-virtualization/master/typings.json",
+    "raw": "github:aurelia/ui-virtualization",
+    "main": "dist/aurelia-ui-virtualization.d.ts",
+    "global": false,
+    "name": "aurelia-ui-virtualization",
+    "type": "typings"
+  }
+}
