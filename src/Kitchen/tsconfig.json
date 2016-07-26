@@ -1,6 +1,6 @@
 {
 
-  "compileOnSave": true,
+  "compileOnSave": false,
   "compilerOptions": {
   
     "sourceMap": true,

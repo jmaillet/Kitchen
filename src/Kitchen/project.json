@@ -61,7 +61,12 @@
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "compile": {
+      "exclude": [
+        "node_modules"
+      ]
+    }
   },
 
   "runtimeOptions": {
@@ -79,6 +84,8 @@
       "web.config"
     ]
   },
+  
+  
 
   "scripts": {
     "prepublish": [ "npm install", "bower install", "gulp clean", "gulp min" ],

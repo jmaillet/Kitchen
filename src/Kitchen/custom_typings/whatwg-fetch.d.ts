@@ -6,7 +6,8 @@
 // @cmichaelgraham - removed explicit external reference
 
 // @cmichaelgraham - added BufferSource and URLSearchParams interfaces to help compilation
-interface URLSearchParams {}
+interface URLSearchParams { }
+interface BufferSource { }
 
 declare class Request {
 	constructor(input: string|Request, init?:RequestInit);
