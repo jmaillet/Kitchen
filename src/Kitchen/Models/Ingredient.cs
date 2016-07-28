@@ -11,7 +11,7 @@ namespace Kitchen.Models
             Unit = unit;
             Recipe = recipe;
         }
-
+        public int Id { get; set; }
         public string Name { get; private set; }
         public decimal Quantity { get; private set; }
         public string Unit { get; private set; }

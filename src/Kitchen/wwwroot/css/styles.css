@@ -69,6 +69,6 @@ ul .c-controls {
   padding: 5px 10px;
   font-size: 1.25em; }
 
-.select li:hover {
+.list-group-item .select li:hover {
   cursor: pointer; }
 

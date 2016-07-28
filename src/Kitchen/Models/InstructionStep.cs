@@ -8,7 +8,7 @@
             Detail = detail;
             Recipe = recipe;
         }
-
+        public int Id { get; set; }
         public int StepNumber { get; private set; }
         public string Detail { get; private set; }
 
